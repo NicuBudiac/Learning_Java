@@ -1,3 +1,4 @@
+ import com.deitel.jhtp.ch08.Time1;
 public class Time1Test {
     public static void main(String[] args) {
         // create and initialize a Time1 constructor

@@ -1,3 +1,5 @@
+package com.deitel.jhtp.ch08;
+
 public class Time1 {
     private int hour;
     private int minute;
