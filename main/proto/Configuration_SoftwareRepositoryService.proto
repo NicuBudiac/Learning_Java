@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package com.nms.config.grpc;
+
+import "Configuration_Types.proto";
+import "google/protobuf/empty.proto";
+
+
+option java_package = "com.nms.config.grpc";
+option java_outer_classname = "SoftwareRepositoryGRPCService";
+
+service SoftwareRepositoryService{
+    rpc uploadPackit(stream Chunk) returns (IdMessage);
+    rpc deletePackit(IdListMessage) returns (google.protobuf.Empty);
+    rpc setToDefault(IdMessage) returns (google.protobuf.Empty);
+    rpc getAllowedSwIdsForFolder(AllowedPacksGrpc) returns (IdListMessage);
+    rpc getHEPlatformsByHardwareGroups(HEPlatformsByHWGroupsRequest) returns (HEHWGroupPlatformsResponce);
+}
+
+message Chunk{
+    bytes Content = 1;
+}
+
+message AllowedPacksGrpc{
+    int64 folderId = 1;
+    int32 resourceGroup = 2;
+}
+
+message HEPlatformsByHWGroupsRequest{
+    int32 folderTypeId = 1;
+    repeated string hardwareGroups = 2;
+}
+
+message HEHWGroupPlatformsResponce{
+    repeated HEHWGroupPlatformDTO platforms = 1;
+}
+
+message HEHWGroupPlatformDTO{
+    string hardwareGroupName = 1;
+    int32 hardwareGroupId = 2;
+    string platformName = 3;
+    int32 platform = 4;
+}

@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package com.nms.config.grpc;
+
+option java_package = "com.nms.config.grpc";
+option java_outer_classname = "Types";
+
+message InitialConfig{
+    string jsonString = 1;
+}
+
+message IdMessage{
+    int64 id = 1;
+}
+
+message IdListMessage{
+    repeated int64 id = 1;
+}

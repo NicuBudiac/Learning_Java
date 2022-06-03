@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Software Update" verbose="2">
+
+
+    <test name="SoftwareChange">
+        <parameter name="reusePath" value="true"/>
+
+        <parameter name="excelFileIN"
+                   value="\\gna2\pituach\Automation\Test\mPower\SW_Upgrade_HE\Inputs\SW_Upgrade_HE.xlsx"/>
+        <parameter name="excelFileOUT" value="\\gna2\pituach\Automation\Test\mPower\SW_Upgrade_HE\"/>
+
+        <classes>
+            <class name="com.gilat.grpc.services.softwareupdate.tests.CitrusTestSoftwareUpdate">
+                <methods>
+                    <include name="testUploadSwVersion"/>
+                    <include name="testSoftwareChange"/>
+                    <include name="testDeleteSwVersion"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <parameter name="config" value="
+{
+sites: {
+  DCM: {
+    siteId: [2]},
+  GWM: {
+    siteId: [2] }
+    },
+clients: {
+  GRPC: {
+    host: 10.16.0.10,
+    port: 1090,
+    timeout: 1000000,
+    keystorePath: secrets/sri.p12,
+    keystorePassword: wgegwgesw4wdwfetwf
+  }
+}
+}"
+    />
+</suite>

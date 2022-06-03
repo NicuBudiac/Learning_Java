@@ -1,0 +1,130 @@
+syntax = "proto3";
+
+package com.nms.commons.grpc;
+
+option java_multiple_files = true;
+option java_package = "com.nms.commons.grpc";
+
+import "google/protobuf/descriptor.proto";
+
+
+extend google.protobuf.EnumValueOptions {
+   string serverText = 50001;
+}
+
+message ApplyCommandRequest{
+	CommandBatch batch = 1;
+	OidMessage commandOid = 2;
+	string parameters = 3;		//JSON serialized
+	bool checkWarnings = 4;
+	map<string, bytes> files = 5;
+}
+
+message CommandBatch{
+	int64 folderId = 1;
+	string filter = 2;
+	bool allSelected = 3;
+}
+
+message ApplyCommandResponse{
+	int64 applyCommandStartDate = 1;
+}
+
+message FindTelemetriesRequest{
+	int64 folderId = 1;
+	repeated string scalars = 2;
+	repeated TelemetriesOidTable tables = 3;
+}
+
+message TelemetriesOidTable{
+	repeated string oids = 1;
+	string startIndex = 2;
+	string endIndex = 3;
+	string filterIndex = 4;
+	int32 maxRepetitions = 5;
+	string instance = 6;
+}
+
+message FindTelemetriesResponse{
+	string oids = 1;		//JSON serialized
+}
+
+message OidMessage {
+	string oid = 1;
+	string instance = 2;
+	string value = 3;
+}
+
+message GetPossibleValuesRequest{
+	int64 parentFolderId = 1;
+	int64 folderId = 2;
+	OidMessage oidKey = 3;
+	string configuration = 4;	//JSON serialized
+}
+
+message GetPossibleValuesResponse{
+	string oid = 1;
+	bool isEditable = 2;
+	string instance = 3;
+	int32 profileType = 4;
+	repeated EnumValueDTO values = 5;
+}
+
+message EnumValueDTO{
+	string name = 1;
+	string value = 2;
+	string description = 3;
+}
+
+message GetPossbileValuesTranslationRequest{
+	int64 parentId = 1;
+	int64 id = 2;
+	string oidKeys = 3;		//JSON serialized
+	string configuration = 4;	//JSON serialized
+}
+
+message GetPossibleValuesTranslationResponse{
+	string translation = 1;		//JSON serialized
+}
+
+message Chunk{
+	bytes data = 1;
+}
+
+message GetSuggestedValuesRequest{
+	int64 parentId = 1;
+	OidMessage oidKey = 2;
+	string configuration = 3;	//JSON serialized
+}
+
+message GetSuggestedValuesResponse{
+	string suggestedValues = 1;	//JSON serialized
+}
+
+message DownloadFileRequest{
+	string componentType = 1;
+	int64 componentId = 2;
+	string fileName = 3;
+	string oid = 4;
+
+}
+
+enum AlarmSeverity{
+    AS_UNKNOWN = 0;
+    AS_NORMAL = 3;
+    AS_WARNING = 4;
+    AS_MINOR = 5;
+    AS_MAJOR = 6;
+    AS_CRITICAL = 7;
+    AS_NA = 8;
+}
+
+enum NEStatus {
+    NES_ONLINE = 0;
+    NES_OFFLINE = 1;
+    NES_UNKNOWN = 2;
+    NES_PRE_PROVISION = 3;
+    NES_NA = 4;
+}
+
+
